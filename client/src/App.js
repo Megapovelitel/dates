@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import React, { useState } from "react";
+import useApi from "./hooks/useApi";
+import { FormComponent as Form } from "./components/FormComponent";
+import getDataBetweenDates from "./services/dates.service";
+import ChartComponent from "./components/ChartComponent";
 
 function App() {
+  const [dates, setDates] = useState({ startDate: null, endDate: null });
+  const [response, trigger] = useApi(getDataBetweenDates);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (dates.startDate >= dates.endDate) return;
+
+    if (!dates.startDate || !dates.endDate) return;
+
+    trigger(dates);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="outer-container">
+      <div className="inner-container">
+        <Form dates={dates} setDates={setDates} onSubmit={onSubmit} />
+        <ChartComponent data={response.result ? response.result : null} />
+      </div>
     </div>
   );
 }
