@@ -38,5 +38,13 @@ export default function ChartComponent({ data }) {
     },
   ];
 
-  return <Chart className="chart" options={options} series={series} type="line" width="100%" />;
+  return (
+      <Chart
+        className="chart"
+        options={options}
+        series={series}
+        type="line"
+        width="100%"
+      />
+  );
 }
