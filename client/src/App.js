@@ -11,10 +11,8 @@ function App() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    if (dates.startDate >= dates.endDate) return;
-
-    if (!dates.startDate || !dates.endDate) return;
+    const { startDate, endDate } = dates
+    if (startDate >= endDate || (!startDate || !endDate)) return;
 
     trigger(dates);
   };
